@@ -15,5 +15,7 @@ As an Employee you can register and sign in to website , the first registration 
 Admin : The only one who can add a service , update service & delete it .
 other accounts (employees) : can create a customer , add services to customers , delete customers , make search for a customer . 
 
+other functionality : update account information , see all customers . 
+
 
 
