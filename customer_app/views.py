@@ -135,3 +135,9 @@ def allCustomers(request):
         'all_customers' : all_customers,
     }
     return render(request , 'allCustomers.html' , context)
+
+# method to delete the customer from database 
+def deleteCustomer(request , customer_id) :
+    this_customer = Customer.objects.get(id = customer_id)
+    this_customer.delete()
+    return redirect('/allCustomers')

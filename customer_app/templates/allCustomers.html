@@ -58,6 +58,7 @@
                         <th scope="col">Email</th>
                         <th scope="col">Created At</th>
                         <th scope="col">Added by</th>
+                        <th scope="col">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -69,6 +70,7 @@
                         <td>{{customer.email}}</td>
                         <td>{{customer.created_at}}</td>
                         <td>{{customer.managed_by.first_name}} {{customer.managed_by.last_name}}</td>
+                        <td><a href="/deleteCustomer/{{customer.id}}"><button type="submit" class="btn btn-danger">Delete</button></a></td>
                       </tr>
                       {% endfor %}
                     </tbody>

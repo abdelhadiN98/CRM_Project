@@ -15,4 +15,5 @@ urlpatterns = [
     path('removeService/<service_id>/<customer_id>', views.removeCsutomerToService),
     path('logout', views.logout),
     path('allCustomers', views.allCustomers),
+    path('deleteCustomer/<customer_id>', views.deleteCustomer),
 ]
