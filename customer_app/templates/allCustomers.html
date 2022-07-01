@@ -51,7 +51,7 @@
             <div class="col">
                 <table class="table table-striped bg-gradient-warning" id="myTable" style="background-color: #6c757dab;">
                     <thead>
-                      <tr style="font-weight:bold;">
+                    <tr style="font-weight:bold;">
                         <th scope="col">ID</th>
                         <th scope="col">First Name</th>
                         <th scope="col">Last Name</th>
@@ -59,11 +59,11 @@
                         <th scope="col">Created At</th>
                         <th scope="col">Added by</th>
                         <th scope="col">Actions</th>
-                      </tr>
+                    </tr>
                     </thead>
                     <tbody>
                         {% for customer in all_customers %}
-                      <tr style="font-weight:bold;font-size:15px;">
+                    <tr style="font-weight:bold;font-size:15px;">
                         <th scope="row">{{customer.id}}</th>
                         <td>{{customer.first_name}}</td>
                         <td>{{customer.last_name}}</td>
@@ -71,10 +71,10 @@
                         <td>{{customer.created_at}}</td>
                         <td>{{customer.managed_by.first_name}} {{customer.managed_by.last_name}}</td>
                         <td><a href="/deleteCustomer/{{customer.id}}"><button type="submit" class="btn btn-danger">Delete</button></a></td>
-                      </tr>
-                      {% endfor %}
+                    </tr>
+                    {% endfor %}
                     </tbody>
-                  </table>
+                </table>
             </div>
         </div>
     
