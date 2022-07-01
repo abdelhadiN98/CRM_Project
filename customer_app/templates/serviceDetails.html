@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Details</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+</head>
+<body style="background-image: url('https://images.pexels.com/photos/7014518/pexels-photo-7014518.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');">
+    <div class="container-fluid">
+            <!-- navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand mr-5" style="font-weight:bold;font-size:22px;" href="/services">Welcome</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item" style="font-weight: bold;background-color: #ffffff57!important;">
+                    <a class="nav-link mr-5 ml-5" href="/services">Home</a>
+                    </li>
+                    <li class="nav-item" style="font-weight: bold;background-color: #ffffff57!important;">
+                    <a class="nav-link" href="/myProfile">My Profile</a>
+                    </li>
+                    <li class="nav-item" style="font-weight: bold;background-color: #ffffff57!important;">
+                    <a class="nav-link" href="/create/new_customer">Add a customer</a>
+                    </li>
+                    <li class="nav-item" style="font-weight: bold;background-color: #ffffff57!important;">
+                    <a class="nav-link" href="/allCustomers">All cutostomers</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-5 ">
+                    <a class="nav-link" style="font-weight:bold;font-size:18px;" href="/logout">Logout</a>
+                </ul>
+                </div>
+            </nav>
+                <!-- end navbar -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col mt-5" style="display: flex;justify-content: center;"><h1>{{this_service.title}}</h1></div>
+        </div>
+        <div class="row" style="background-color: #6c757d47;border-radius: 5px;">
+            <span class="border border-dark" style="height:200px;width:100%;padding:10px;overflow-x:hidden;font-weight: bold;">Description : {{this_service.desc}}</span>
+        </div>
+        <div class="row">
+            <div class="col mt-3"></div>
+        </div>
+        {% if this_employee.is_admin == 1 %}
+        <div class="row">
+            <a href="/update/service/{{this_service.id}}"><button type="submit" class="btn btn-secondary mb-3 mt-2"
+                style="background-color: #212529;">Update</button></a>
+            <a href="/delete/service/{{this_service.id}}"><button type="submit" class="btn btn-secondary mb-3 mt-2 mx-5"
+                style="background-color: #212529;">Delete</button></a>
+        </div>
+        {% endif %}
+        
+        <div class="row">
+            <div class="col">
+                <form action="/addSevriceCustomer/{{this_service.id}}" method="post">
+                    {% csrf_token %}
+                    
+                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="customer">
+                        {% for customer in all_customers %}
+                        {% if customer not in this_service_customers %}
+                        <!-- <option selected>Open this select menu</option> -->
+                        <option value={{customer.id}}>{{customer.first_name}} {{customer.last_name}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+
+                    <button type="submit" class="btn btn-secondary" style="background-color: #212529;">Add this service</button>
+                </form>
+            </div>
+        </div>
+        <div class="row"><div class="col"><h1>All customers</h1></div></div>
+        <div class="row">
+            <div class="col-6">
+                <input class="form-control mr-sm-2" id="myInput" type="search" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name" aria-label="Search">
+            </div>
+        </div>
+
+        <!-- for loop for customers with this service -->
+        <table class="table mt-2" id="myTable" style="background-color: #6c757dab;">
+            <thead>
+            <tr style="font-size:18px;font-weight:bold;">
+                <th scope="col">Id</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email address</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for customer in this_service_customers %}
+                
+            <tr style="font-weight:bold;">
+                <th scope="row">{{customer.id}}</th>
+                <td>{{customer.first_name}}</td>
+                <td>{{customer.last_name}}</td>
+                <td>{{customer.email}}</td>
+                <td><a href="/removeService/{{this_service.id}}/{{customer.id}}"><button type="submit" class="btn btn-danger">Stop Service</button></a></td>
+            </tr>
+            
+            {% endfor %}
+            </tbody>
+        </table>
+        <!-- end loop -->
+
+    </div>
+</div>
+
+
+<!-- for search -->
+<script>
+    function myFunction() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+        } else {
+            tr[i].style.display = "none";
+        }
+        }       
+    }
+    }
+    </script>
+</body>
+</html>
